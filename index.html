@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Principal Garmon Campaign</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init("G8WFX-uXZXqyByVNE");
-        })();
-    </script>
     <style>
         * {
             margin: 0;
@@ -260,10 +255,23 @@ Parent of Broadway Elementary School Student
     </div>
 
     <script>
-        // EmailJS Configuration
-        const EMAILJS_SERVICE_ID = 'service_zf9dbpb';
-        const EMAILJS_TEMPLATE_ID = 'template_lbu5q5p';
-        const EMAILJS_PUBLIC_KEY = 'G8WFX-uXZXqyByVNE';
+        // Wait for EmailJS to load before initializing
+        window.addEventListener('load', function() {
+            // Check if EmailJS loaded
+            if (typeof emailjs === 'undefined') {
+                console.error('EmailJS failed to load');
+                document.getElementById('sendButton').disabled = true;
+                document.getElementById('sendButton').textContent = 'EmailJS Failed to Load';
+                return;
+            }
+
+            // Initialize EmailJS
+            emailjs.init("G8WFX-uXZXqyByVNE");
+
+            // EmailJS Configuration
+            const EMAILJS_SERVICE_ID = 'service_zf9dbpb';
+            const EMAILJS_TEMPLATE_ID = 'template_lbu5q5p';
+            const EMAILJS_PUBLIC_KEY = 'G8WFX-uXZXqyByVNE';
 
         // Form elements
         const form = document.getElementById('emailForm');
@@ -342,7 +350,9 @@ Parent of Broadway Elementary School Student`;
                 // Fixed values for campaign
                 const recipientEmail = 'cskbes@gmail.com';
                 const subject = 'Strong Opposition to Principal Garmon\'s Removal - Broadway Elementary';
-                const template = `<p>Dear <strong>Superintendent Carvalho</strong>:</p>
+                
+                // Template for email to Superintendent
+                const superintendentTemplate = `<p>Dear <strong>Superintendent Carvalho</strong>:</p>
 
 <p>I am writing to express my strong opposition to the District's decision to remove Principal Garmon from Broadway Elementary School. As a parent at BES, I believe this decision is misguided and will ultimately harm our school and the children. <strong>More troubling, this appears to be a transparent attempt to scapegoat Principal Garmon for the District's own systemic failures.</strong></p>
 
@@ -363,7 +373,7 @@ Parent of Broadway Elementary School Student</p>`;
                     from_name: userName,
                     from_email: userEmail,
                     subject: subject,
-                    message: template
+                    message: superintendentTemplate
                 };
 
                 console.log('Sending email to Superintendent:', recipientEmail);
@@ -374,12 +384,7 @@ Parent of Broadway Elementary School Student</p>`;
                 );
 
                 // SECOND EMAIL: Send confirmation to sender
-                const confirmationParams = {
-                    to_email: userEmail,
-                    from_name: 'Support Principal Garmon Campaign',
-                    from_email: 'noreply@campaign.com',
-                    subject: 'Confirmation: Your email opposing Principal Garmon\'s removal was sent',
-                    message: `<p>Hi ${userName},</p>
+                const confirmationTemplate = `<p>Hi <strong>${userName}</strong>,</p>
 
 <p>Thank you for supporting Principal Garmon!</p>
 
@@ -391,13 +396,20 @@ Parent of Broadway Elementary School Student</p>`;
 <p>Here's a copy of what was sent:</p>
 
 <hr>
-${template}
+${superintendentTemplate}
 <hr>
 
 <p>Thank you for your support in keeping Principal Garmon at Broadway Elementary School!</p>
 
 <p>Best regards,<br>
-Support Principal Garmon Campaign Team</p>`
+Support Principal Garmon Campaign Team</p>`;
+
+                const confirmationParams = {
+                    to_email: userEmail,
+                    from_name: 'Support Principal Garmon Campaign',
+                    from_email: 'noreply@campaign.com',
+                    subject: 'Confirmation: Your email opposing Principal Garmon\'s removal was sent',
+                    message: confirmationTemplate
                 };
 
                 console.log('Sending confirmation email to:', userEmail);
@@ -419,6 +431,8 @@ Support Principal Garmon Campaign Team</p>`
                 sendButton.textContent = '🚀 Send Email to Superintendent Carvalho';
             }
         });
+
+        }); // End of window load event listener
     </script>
 </body>
 </html>
