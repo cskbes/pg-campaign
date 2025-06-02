@@ -363,6 +363,7 @@ Parent of Broadway Elementary School Student</p>`;
                     from_name: userName,
                     from_email: userEmail,
                     subject: subject,
+                    message: template,
                     message_html: template
                 };
 
@@ -379,6 +380,25 @@ Parent of Broadway Elementary School Student</p>`;
                     from_name: 'Support Principal Garmon Campaign',
                     from_email: 'noreply@campaign.com',
                     subject: 'Confirmation: Your email opposing Principal Garmon\'s removal was sent',
+                    message: `<p>Hi ${userName},</p>
+
+<p>Thank you for supporting Principal Garmon!</p>
+
+<p>Your email has been successfully sent to Superintendent Carvalho (cskbes@gmail.com) with the following details:</p>
+
+<p><strong>Subject:</strong> Strong Opposition to Principal Garmon's Removal - Broadway Elementary<br>
+<strong>Sent at:</strong> ${new Date().toLocaleString()}</p>
+
+<p>Here's a copy of what was sent:</p>
+
+<hr>
+${template}
+<hr>
+
+<p>Thank you for your support in keeping Principal Garmon at Broadway Elementary School!</p>
+
+<p>Best regards,<br>
+Support Principal Garmon Campaign Team</p>`,
                     message_html: `<p>Hi ${userName},</p>
 
 <p>Thank you for supporting Principal Garmon!</p>
